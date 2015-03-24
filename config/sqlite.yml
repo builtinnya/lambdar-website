@@ -1,0 +1,20 @@
+Default: &defaults
+  database: lambdar.sqlite3
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: lambdar_test.sqlite3
+  <<: *defaults
+
+Staging:
+  database: lambdar_staging.sqlite3
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: lambdar_production.sqlite3
+  poolsize: 100
+  <<: *defaults
