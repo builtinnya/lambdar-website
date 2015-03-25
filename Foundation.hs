@@ -8,6 +8,7 @@ import Yesod.Auth.BrowserId (authBrowserId)
 import Yesod.Default.Util   (addStaticContentExternal)
 import Yesod.Core.Types     (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
+import Yesod.Form.Nic (YesodNic)
 
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -136,6 +137,8 @@ instance YesodAuth App where
     authHttpManager = getHttpManager
 
 instance YesodAuthPersist App
+
+instance YesodNic App
 
 -- This instance is required to use forms. You can modify renderMessage to
 -- achieve customized and internationalized form validation messages.
