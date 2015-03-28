@@ -35,3 +35,10 @@ header {
     }
   }
 }
+
+footer {
+  background-color: inherit;
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px solid #e5e5e5;
+}
