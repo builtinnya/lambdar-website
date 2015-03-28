@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="602.36298"
+   height="425.19501"
+   viewBox="0 0 481.89038 340.15599"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/Users/nya/Pictures/lambdar-icon-600-600.png"
+   inkscape:export-xdpi="89.646896"
+   inkscape:export-ydpi="89.646896">
+  <metadata
+     id="metadata22">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1248"
+     inkscape:window-height="788"
+     id="namedview20"
+     showgrid="false"
+     inkscape:zoom="0.81487523"
+     inkscape:cx="316.99996"
+     inkscape:cy="192.1787"
+     inkscape:window-x="25"
+     inkscape:window-y="40"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g2995"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5684" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient5674"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#2980b9;stop-opacity:1;"
+         offset="0"
+         id="stop5676" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 212.59839 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="602.36212 : 212.59839 : 1"
+       inkscape:persp3d-origin="301.18106 : 141.73226 : 1"
+       id="perspective24" />
+    <clipPath
+       id="clip1">
+      <path
+         d="m 0,340.15625 481.89062,0 L 481.89062,0 0,0 0,340.15625 Z m 0,0"
+         id="path7"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+  </defs>
+  <g
+     id="g2995"
+     transform="translate(-0.75252332,-224.5703)">
+    <path
+       id="path12"
+       d="M 0.75252332,564.72629 114.13924,394.64828 0.75252332,224.57029 l 85.03905668,0 113.38672,170.07799 -113.38672,170.07801 -85.03905668,0 z m 0,0"
+       style="fill:#2980b9;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path14"
+       d="M 114.13924,564.72629 227.52596,394.64828 114.13924,224.57029 l 85.03906,0 226.76953,340.156 -85.03906,0 -70.86328,-106.2968 -70.86719,106.2968 -85.03906,0 z m 0,0"
+       style="fill:#34495e;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g2991"
+       transform="translate(-71.61576,142.48329)">
+      <path
+         style="fill:#34495e;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 403.07922,237.99331 -37.79688,-56.6914 188.97656,-0.004 0,56.69531 -151.17968,0 z m 0,0"
+         id="path18"
+         inkscape:connector-curvature="0" />
+    </g>
+    <rect
+       style="fill:#34495e;fill-opacity:1"
+       id="rect4228"
+       width="50.069016"
+       height="50.068977"
+       x="432.57413"
+       y="514.65729"
+       rx="0"
+       ry="0" />
+  </g>
+</svg>

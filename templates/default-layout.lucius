@@ -1,0 +1,37 @@
+.container {
+  margin: 10px auto;
+  max-width: 768px;
+}
+
+header {
+  display: table;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
+  .header-logo {
+    display: table-cell;
+    width: 100px;
+  }
+  .header-main {
+    display: table-cell;
+    width: 100%;
+    position: relative;
+    nav {
+      position: absolute;
+      bottom: 0;
+      font-weight: bold;
+      ul {
+        margin: 0 0 0 25px;
+        padding: 0;
+        list-style: none;
+        li {
+          float: left;
+          display: list-item;
+        }
+        li+li {
+          margin-left: 16px;
+        }
+      }
+    }
+  }
+}
