@@ -1,5 +1,5 @@
 <h1> #{articleTitle article}
 <article> #{articleContent article}
 <hr>
-<a href=@{BlogR}>
+<a href="#">
     Go to article list.

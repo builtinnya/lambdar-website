@@ -8,9 +8,31 @@ Email
     user UserId Maybe
     verkey Text Maybe
     UniqueEmail email
+Language
+    slug Text
+    name Text
+    UniqueLangName name
+    Primary slug
 Article
+    lang Text
+    slug Text
     title Text
+    created UTCTime
+    updated UTCTime
+    views Int
     content Html
-    deriving
+    UniqueArticle lang slug
+    Primary lang slug
+    Foreign Language fklang lang
+Tag
+    slug Text
+    name Text
+    description Text
+    UniqueTagName name
+    Primary slug
+TagArticle
+    tag TagId
+    articleSlug Text
+    Primary tag articleSlug
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
