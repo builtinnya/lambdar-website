@@ -152,6 +152,62 @@ executable lang
                   , yesod-persistent >= 1.4.0.2
                   , yesod-static >= 1.4.0.4
 
+executable tag
+    if flag(library-only)
+       Buildable: False
+
+    main-is:        tag.hs
+    hs-source-dirs: app
+
+    ghc-options: -threaded -O2 -rtsopts -with-rtsopts=-N
+
+    extensions: TemplateHaskell
+                QuasiQuotes
+                OverloadedStrings
+                CPP
+                MultiParamTypeClasses
+                TypeFamilies
+                GADTs
+                GeneralizedNewtypeDeriving
+                FlexibleContexts
+                EmptyDataDecls
+                NoMonomorphismRestriction
+                DeriveDataTypeable
+                ViewPatterns
+                TupleSections
+                FlexibleInstances
+                DeriveGeneric
+                ScopedTypeVariables
+
+    build-depends:  aeson >= 0.8.0.2
+                  , base
+                  , classy-prelude
+                  , classy-prelude-yesod
+                  , fast-logger >= 2.2.3
+                  , file-embed >= 0.0.8.2
+                  , hjsmin >= 0.1.4.7
+                  , lambdar
+                  , lifted-base
+                  , monad-logger
+                  , optparse-applicative >= 0.11.0.2
+                  , persistent                    >= 2.0        && < 2.2
+                  , persistent-sqlite             >= 2.1.1      && < 2.2
+                  , resourcet
+                  , shakespeare
+                  , template-haskell
+                  , text >= 0.11 && < 2.0
+                  , transformers
+                  , wai-extra >= 3.0.4.6
+                  , warp >= 3.0.10
+                  , yaml >= 0.8.10.1
+                  , yaml >= 0.8.10.1
+                  , yesod
+                  , yesod-auth >= 1.4.3.1
+                  , yesod-core
+                  , yesod-form >= 1.4.4.1
+                  , yesod-persistent >= 1.4.0.2
+                  , yesod-static >= 1.4.0.4
+
 test-suite test
     type:              exitcode-stdio-1.0
     main-is:           Spec.hs
