@@ -17,9 +17,9 @@ Article
     lang Text
     slug Text
     title Text
-    created UTCTime
-    updated UTCTime
-    views Int
+    created UTCTime default=CURRENT_TIME
+    updated UTCTime default=CURRENT_TIME
+    views Int default=0
     content Html
     UniqueArticle lang slug
     Primary lang slug
