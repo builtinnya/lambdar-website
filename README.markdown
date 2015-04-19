@@ -4,4 +4,4 @@
 
 This is the repository of my personal website, [Lambdar][].
 
-[Lambdar]: http://lambdar.info/
+[Lambdar]: http://lambdar.me/
