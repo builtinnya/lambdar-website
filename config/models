@@ -1,3 +1,6 @@
+-- Unique constraints doesn't work with primary key contraints:
+-- see https://github.com/yesodweb/persistent/issues/342
+
 User
     ident Text
     password Text Maybe
@@ -11,28 +14,36 @@ Email
 Language
     slug Text
     name Text
-    UniqueLangName name
-    Primary slug
+    UniqueLanguage slug
+    UniqueLanguageName name
+    -- Primary slug
 Article
-    lang Text
+    -- lang Text
+    lang LanguageId
     slug Text
     title Text
     created UTCTime default=CURRENT_TIME
     updated UTCTime default=CURRENT_TIME
     views Int default=0
     content Html
+    sourcefile Text
+    hash Text
     UniqueArticle lang slug
-    Primary lang slug
-    Foreign Language fklang lang
+    UniqueArticleTitle title
+    UniqueArticleSourcefile sourcefile
+    -- Primary lang slug
+    -- Foreign Language fklang lang
 Tag
     slug Text
     name Text
     description Text
+    UniqueTag slug
     UniqueTagName name
-    Primary slug
+    -- Primary slug
 TagArticle
     tag TagId
     articleSlug Text
-    Primary tag articleSlug
+    UniqueTagArticle tag articleSlug
+    -- Primary tag articleSlug
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

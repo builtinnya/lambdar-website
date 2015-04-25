@@ -58,18 +58,17 @@ addTag db slug name Nothing = addTag db slug name (Just "")
 addTag db slug name (Just description) = do
   let entity = Tag (T.pack slug) (T.pack name) (T.pack description)
   runSqlite db $ do
-    TagKey slug <- insert entity
-    liftIO $ putStrLn $ "Tag (" ++ (T.unpack slug) ++ ") has been added."
+    TagKey _ <- insert entity
+    liftIO $ putStrLn $ "Tag (" ++ slug ++ ") has been added."
     return ()
   `catch` \(e :: SomeException) -> putStrLn $ show e
 
 updateTag :: Database -> String -> Maybe String -> Maybe String -> IO ()
 updateTag db slug name description = do
-  let tagId = TagKey (T.pack slug)
   runSqlite db $ do
-    res <- get tagId
+    res <- getBy $ UniqueTag (T.pack slug)
     case res of
-     Just _ -> do
+     Just (Entity tagId _) -> do
        let updates = map fromJust $ filter isJust $
                      [ name >>= \n -> Just $ TagName =. (T.pack n)
                      , description >>= \d -> Just $ TagDescription =. (T.pack d) ]
@@ -82,11 +81,10 @@ updateTag db slug name description = do
 
 deleteTag :: Database -> String -> IO ()
 deleteTag db slug = do
-  let tagId = TagKey (T.pack slug)
   runSqlite db $ do
-    res <- get tagId
+    res <- getBy $ UniqueTag (T.pack slug)
     case res of
-     Just _ -> do
+     Just (Entity tagId _) -> do
        delete tagId
        liftIO $ putStrLn $ "Tag (" ++ slug ++ ") has been deleted."
      Nothing -> do
@@ -109,6 +107,10 @@ main = do
 
   -- Get the database file from the settings
   let db = sqlDatabase $ appDatabaseConf settings
+
+  -- Run database migration
+  runSqlite db $ do
+    runMigration migrateAll
 
   -- Parse arguments
   o <- execParser optParser'

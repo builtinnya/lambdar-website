@@ -56,18 +56,17 @@ addLang :: Database -> String -> String -> IO ()
 addLang db slug name = do
   let entity = Language (T.pack slug) (T.pack name)
   runSqlite db $ do
-    LanguageKey slug <- insert entity
-    liftIO $ putStrLn $ "Language (" ++ (T.unpack slug) ++ ") has been added."
+    LanguageKey _ <- insert entity
+    liftIO $ putStrLn $ "Language (" ++ slug ++ ") has been added."
     return ()
   `catch` \(e :: SomeException) -> putStrLn $ show e
 
 updateLang :: Database -> String -> String -> IO ()
 updateLang db slug name = do
-  let langId = LanguageKey (T.pack slug)
   runSqlite db $ do
-    res <- get langId
+    res <- getBy $ UniqueLanguage (T.pack slug)
     case res of
-     Just _ -> do
+     Just (Entity langId _) -> do
        update langId [ LanguageName =. (T.pack name) ]
        liftIO $ putStrLn $ "Language (" ++ slug ++ ") has been updated."
      Nothing -> do
@@ -77,11 +76,10 @@ updateLang db slug name = do
 
 deleteLang :: Database -> String -> IO ()
 deleteLang db slug = do
-  let langId = LanguageKey (T.pack slug)
   runSqlite db $ do
-    res <- get langId
+    res <- getBy $ UniqueLanguage (T.pack slug)
     case res of
-     Just _ -> do
+     Just (Entity langId _) -> do
        delete langId
        liftIO $ putStrLn $ "Language (" ++ slug ++ ") has been deleted."
      Nothing -> do
@@ -104,6 +102,10 @@ main = do
 
   -- Get the database file from the settings
   let db = sqlDatabase $ appDatabaseConf settings
+
+  -- Run database migration
+  runSqlite db $ do
+    runMigration migrateAll
 
   -- Parse arguments
   o <- execParser optParser'
