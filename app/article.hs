@@ -20,7 +20,7 @@ import Options.Applicative
 import Text.Pandoc
 import Text.Blaze.Html
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
-import Data.Time (getCurrentTime)
+import Data.Time (UTCTime, getCurrentTime)
 import Crypto.Hash
 import qualified Database.Esqueleto as E
 import Database.Esqueleto ((^.))
@@ -46,6 +46,31 @@ data Command = AddCmd     { lang :: String
              deriving (Show, Eq)
 
 type Database = T.Text
+
+
+timestamp :: UTCTime -> [ Update Article ] -> [ Update Article ]
+timestamp now [] = []
+timestamp now updates = ( ArticleUpdated =. now ) : updates
+
+githubMarkdownToHtml :: String -> Html
+githubMarkdownToHtml =
+  (writeHtml def) . readMarkdown def { readerExtensions = githubMarkdownExtensions }
+
+htmlToSHA1Text :: Html -> T.Text
+htmlToSHA1Text html = T.pack $ show $ (hashlazy (renderHtml html) :: Digest SHA1)
+
+getArticle :: Database -> String -> String -> IO (Maybe (Entity Article))
+getArticle db lang slug = do
+  runSqlite db $ do
+    res <- E.select
+         $ E.from $ \(article, language) -> do
+           E.where_ (article  ^. ArticleSlug  E.==. E.val (T.pack slug)
+               E.&&. article  ^. ArticleLang  E.==. language ^. LanguageId
+               E.&&. language ^. LanguageSlug E.==. E.val (T.pack lang))
+           return article
+    case res of
+     []    -> return $ Nothing
+     a : _ -> return $ Just a
 
 listArticles :: Database -> IO ()
 listArticles db = do
@@ -75,17 +100,13 @@ listArticles db = do
           justifyCol (l, t) = T.justifyRight l ' ' (T.snoc t ' ') in
        T.intercalate (T.pack "|") $ map justifyCol $ zip colLens [ l, s, t, f, (T.pack . show) u ]
 
-githubMarkdownToHtml :: String -> Html
-githubMarkdownToHtml =
-  (writeHtml def) . readMarkdown def { readerExtensions = githubMarkdownExtensions }
-
 addArticle :: Database -> String -> String -> String -> String -> IO ()
 addArticle db lang slug title sourcefile = do
   withFile sourcefile ReadMode (\handle -> do
     now <- getCurrentTime
     contents <- hGetContents handle
     let html = githubMarkdownToHtml contents
-        hashVal = show $ (hashlazy (renderHtml html) :: Digest SHA1)
+        hashVal = htmlToSHA1Text html
     runSqlite db $ do
       Just (Entity langId _) <- getBy $ UniqueLanguage (T.pack lang)
       let entity = Article { articleLang       = langId
@@ -96,7 +117,7 @@ addArticle db lang slug title sourcefile = do
                            , articleUpdated    = now
                            , articleViews      = 0
                            , articleContent    = html
-                           , articleHash       = T.pack hashVal }
+                           , articleHash       = hashVal }
       articleId <- insert entity
       liftIO $ putStrLn $ "Article (" ++ lang ++ ", " ++ slug ++ ") has been added."
       return ()
@@ -104,14 +125,14 @@ addArticle db lang slug title sourcefile = do
 
 updateArticle :: Database -> String -> String -> Maybe String -> Maybe String -> IO ()
 updateArticle db lang slug title tags = do
+  now <- getCurrentTime
   runSqlite db $ do
-    Just (Entity langId _) <- getBy $ UniqueLanguage (T.pack lang)
-    res <- getBy $ UniqueArticle langId (T.pack slug)
+    res <- liftIO $ getArticle db lang slug
     case res of
      Just (Entity articleId _) -> do
        let updates = map fromJust $ filter isJust $
-                     [ title >>= \t -> Just $ ArticleTitle =. (T.pack t) ]
-       update articleId updates
+                     [ title >>= \t -> Just $ ArticleTitle   =. (T.pack t) ]
+       update articleId (timestamp now updates)
        liftIO $ putStrLn $ "Article (" ++ lang ++ ", " ++ slug ++ ") has been updated."
      Nothing -> do
        liftIO $ putStrLn $ "Article (" ++ lang ++ ", " ++ slug ++ ") not found."
@@ -119,14 +140,60 @@ updateArticle db lang slug title tags = do
   `catch` \(e :: SomeException) -> putStrLn $ show e
 
 contentArticle :: Database -> String -> String -> Maybe String -> IO ()
-contentArticle db lang slug sourcefile = do
-  putStrLn $ "Not implemented"
+contentArticle db lang slug _sourcefile = do
+  now <- getCurrentTime
+  res <- getArticle db lang slug
+  case res of
+   Just (Entity articleId article) -> do
+     let (sfChanged, sourcefile) = getSourcefile article _sourcefile
+
+     withFile (T.unpack sourcefile) ReadMode ( \handle -> do
+       contents <- hGetContents handle
+
+       let html = githubMarkdownToHtml contents
+           hashVal = htmlToSHA1Text html
+           contentChanged = hashVal /= articleHash article
+
+       runSqlite db $ do
+           update articleId $
+             if contentChanged
+               then (timestamp now [ ArticleContent    =. html
+                                   , ArticleHash       =. hashVal
+                                   , ArticleUpdated    =. now
+                                   , ArticleSourcefile =. sourcefile ])
+               else [ ArticleSourcefile =. sourcefile ]
+                    -- For the case that we just want to change the source file's name.
+                    -- It's internal so don't update updated.
+           return ()
+
+       printIfSourcefileNameChanged sfChanged sourcefile
+       printIfContentChanged contentChanged )
+
+     where printIfContentChanged contentChanged
+             | contentChanged =
+                 putStrLn $ "Article content has been updated."
+             | otherwise =
+                 putStrLn $ "Article content has not been changed."
+
+           printIfSourcefileNameChanged sfChanged sourcefile
+             | sfChanged  =
+                 putStrLn $ "Article source file -> " ++ (T.unpack sourcefile)
+             | otherwise  =
+                 return ()
+
+           getSourcefile article _sourcefile =
+             let sourcefile = articleSourcefile article
+             in case _sourcefile of
+                 Nothing -> (False, articleSourcefile article)
+                 Just f  -> (sourcefile /= (T.pack f), T.pack f)
+   Nothing -> do
+     putStrLn $ "Couldn't find the article"
+  `catch` \(e :: SomeException) -> putStrLn $ show e
 
 deleteArticle :: Database -> String -> String -> IO ()
 deleteArticle db lang slug = do
   runSqlite db $ do
-    Just (Entity langId _) <- getBy $ UniqueLanguage (T.pack lang)
-    res <- getBy $ UniqueArticle langId (T.pack slug)
+    res <- liftIO $ getArticle db lang slug
     case res of
      Just (Entity articleId _) -> do
        delete articleId
