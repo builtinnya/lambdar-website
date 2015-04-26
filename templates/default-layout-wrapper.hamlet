@@ -42,6 +42,10 @@ $newline never
                   Articles
       <div id="main" role="main">
         ^{pageBody pc}
+
+        <script>
+          hljs.initHighlightingOnLoad();
+
       <footer>
         #{appCopyright $ appSettings master}
 
