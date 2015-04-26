@@ -270,6 +270,7 @@ executable article
                   , blaze-markup >= 0.6.3.0
                   , time >= 1.4.2
                   , esqueleto >= 2.1.2.1
+                  , split >= 0.2.2
 
 test-suite test
     type:              exitcode-stdio-1.0

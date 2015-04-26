@@ -24,6 +24,9 @@ import Data.Time (UTCTime, getCurrentTime)
 import Crypto.Hash
 import qualified Database.Esqueleto as E
 import Database.Esqueleto ((^.))
+import Data.Char (isSpace)
+import Data.List (dropWhile, dropWhileEnd, intercalate)
+import Data.List.Split (splitOn)
 
 data Options = Options
                { optCommand :: Command }
@@ -36,13 +39,16 @@ data Command = AddCmd     { lang :: String
              | ListCmd
              | UpdateCmd  { lang :: String
                           , slug :: String
-                          , _title :: Maybe String
-                          , _tags :: Maybe String }
+                          , _title :: Maybe String }
              | ContentCmd { lang :: String
                           , slug :: String
                           , _sourcefile :: Maybe String }
              | DeleteCmd  { lang :: String
                           , slug :: String }
+             | TagCmd     { slug :: String
+                          , _tags :: Maybe String }
+             | UntagCmd   { slug :: String
+                          , _tags :: Maybe String }
              deriving (Show, Eq)
 
 type Database = T.Text
@@ -123,8 +129,8 @@ addArticle db lang slug title sourcefile = do
       return ()
     `catch` \(e :: SomeException) -> putStrLn $ show e)
 
-updateArticle :: Database -> String -> String -> Maybe String -> Maybe String -> IO ()
-updateArticle db lang slug title tags = do
+updateArticle :: Database -> String -> String -> Maybe String -> IO ()
+updateArticle db lang slug title = do
   now <- getCurrentTime
   runSqlite db $ do
     res <- liftIO $ getArticle db lang slug
@@ -203,6 +209,87 @@ deleteArticle db lang slug = do
     return ()
   `catch` \(e :: SomeException) -> putStrLn $ show e
 
+getTagSlugs :: String -> [String]
+getTagSlugs tags = map (dropWhileEnd isSpace . dropWhile isSpace) $ splitOn "," tags
+
+listArticleTags :: Database -> String -> IO ()
+listArticleTags db articleSlug = do
+  runSqlite db $ do
+    tags <- E.select
+          $ E.from $ \(tagArticle, tag) -> do
+            E.where_ (tagArticle ^. TagArticleArticleSlug E.==. E.val (T.pack articleSlug)
+                E.&&. tagArticle ^. TagArticleTag         E.==. tag ^. TagId)
+            return tag
+    liftIO $ TIO.putStr header
+    liftIO $ TIO.putStr $ T.unlines $ map showTag tags
+    return ()
+  where
+    colLens = [ 15, 15, 20 ]
+    colNames = map T.pack [ "Slug", "Name", "Description" ]
+    header =
+      let centerCol (l, t) = T.center l ' ' t
+          cols = T.intercalate (T.pack "|") $ map centerCol $ zip colLens colNames
+          sep = T.replicate ((sum colLens) + (length colLens) - 1) (T.pack "-") in
+       T.unlines [ cols, sep ]
+    showTag (Entity _ (Tag s n d)) =
+      let sep = T.pack "|"
+          justifyCol (l, t) = T.justifyRight l ' ' (T.snoc t ' ') in
+       T.intercalate (T.pack "|") $ map justifyCol $ zip colLens [ s, n, d ]
+
+tagArticle :: Database -> String -> Maybe String -> IO ()
+tagArticle db slug _tags = do
+  case _tags of
+   Just _tags -> do
+     let tagSlugs = getTagSlugs _tags
+     runSqlite db $ do
+       articles <- selectList [ ArticleSlug ==. (T.pack slug) ] []
+       if null articles
+         then liftIO $ putStrLn $ "No article (" ++ slug ++ ") exists"
+         else do
+           tags <- selectList [ FilterOr $ map ((==.) TagSlug) (map T.pack tagSlugs) ] []
+           insertMany_ $ map (createTagArticle slug) tags
+           let attachedTags = map (\(Entity _ tag) -> T.unpack $ tagSlug tag) tags
+           liftIO $ printResultMsg attachedTags
+
+     where createTagArticle articleSlug (Entity tagId _) =
+             TagArticle tagId $ (T.pack articleSlug)
+
+           printResultMsg attachedTags = case attachedTags of
+             [] ->
+               putStrLn $ "No tags attached (no specified article or tag exists)."
+             tags ->
+               putStrLn $ "Tags (" ++ (intercalate ", " tags) ++ ")" ++ " has been attached to " ++ slug ++ "."
+
+   Nothing -> do
+     listArticleTags db slug
+
+untagArticle :: Database -> String -> Maybe String -> IO ()
+untagArticle db slug _tags = do
+  case _tags of
+   Just _tags -> do
+     let tagSlugs = getTagSlugs _tags
+     runSqlite db $ do
+       articles <- selectList [ ArticleSlug ==. (T.pack slug) ] []
+       if null articles
+          then liftIO $ putStrLn $ "No article (" ++ slug ++ ") exists"
+          else do
+            tags <- selectList [ FilterOr $ map ((==.) TagSlug) (map T.pack tagSlugs) ] []
+            mapM_ deleteBy $ map createTagArticle tags
+            let detachedTags = map (\(Entity _ tag) -> T.unpack $ tagSlug tag) tags
+            liftIO $ printResultMsg detachedTags
+
+     where createTagArticle (Entity tagId _) =
+             UniqueTagArticle tagId (T.pack slug)
+
+           printResultMsg detachedTags = case detachedTags of
+             [] ->
+               putStrLn $ "No tags detached (no specified tag attached to the article)"
+             tags ->
+               putStrLn $ "Tags (" ++ (intercalate ", " tags) ++ ")" ++ " has been detached from " ++ slug ++ "."
+
+   Nothing -> do
+     listArticleTags db slug
+
 main :: IO ()
 main = do
   -- Get the settings from all relevant sources
@@ -228,9 +315,11 @@ main = do
   case optCommand o of
    AddCmd     lang slug title sourcefile -> addArticle db lang slug title sourcefile
    ListCmd                               -> listArticles db
-   UpdateCmd  lang slug _title _tags     -> updateArticle db lang slug _title _tags
+   UpdateCmd  lang slug _title           -> updateArticle db lang slug _title
    ContentCmd lang slug _sourcefile      -> contentArticle db lang slug _sourcefile
    DeleteCmd  lang slug                  -> deleteArticle db lang slug
+   TagCmd     slug _tags                 -> tagArticle db slug _tags
+   UntagCmd   slug _tags                 -> untagArticle db slug _tags
 
 addOptions :: Parser Command
 addOptions = AddCmd
@@ -262,10 +351,6 @@ updateOptions = UpdateCmd
               ( long "title"
              <> metavar "TITLE"
              <> help "The new title of the article" ) )
-        <*> ( optional $ strOption
-              ( long "tags"
-             <> metavar "TAGS"
-             <> help "The new tags of the article" ) )
 
 contentOptions :: Parser Command
 contentOptions = ContentCmd
@@ -288,6 +373,26 @@ deleteOptions = DeleteCmd
         <*> argument str
             ( metavar "SLUG"
            <> help "The slug for the article" )
+
+tagOptions :: Parser Command
+tagOptions = TagCmd
+        <$> argument str
+            ( metavar "SLUG"
+           <> help "The slug for the article" )
+        <*> ( optional $ strOption
+              ( long "tags"
+             <> metavar "TAGS"
+             <> help "Comma-separated list of tag slugs to be attached" ) )
+
+untagOptions :: Parser Command
+untagOptions = UntagCmd
+        <$> argument str
+            ( metavar "SLUG"
+           <> help "The slug for the article" )
+        <*> ( optional $ strOption
+              ( long "tags"
+             <> metavar "TAGS"
+             <> help "Comma-separated list of tag slugs to be detached" ) )
 
 optParser' :: ParserInfo Options
 optParser' = info (helper <*> optParser) ( fullDesc <> header "Lambdar command-line manager" )
@@ -313,4 +418,12 @@ optParser = Options
                      <> command "delete"
                            (info deleteOptions
                             ( fullDesc
-                           <> progDesc "Delete an article" )) )
+                           <> progDesc "Delete an article" ))
+                     <> command "tag"
+                           (info tagOptions
+                            ( fullDesc
+                           <> progDesc "Attach tags to an article" ))
+                     <> command "untag"
+                           (info untagOptions
+                            ( fullDesc
+                           <> progDesc "Detach tags from an article" )) )
