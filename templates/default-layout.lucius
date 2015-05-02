@@ -1,3 +1,29 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 2.25em;
+  margin-top: 17px;
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.75em;
+  margin-top: 15px;
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-top: 15px;
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+}
+
 .container {
   margin: 10px auto;
   max-width: 768px;
@@ -7,7 +33,8 @@ header {
   display: table;
   width: 100%;
   padding-bottom: 10px;
-  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 7px;
+  border-bottom: 5px solid #e5e5e5;
   .header-logo {
     display: table-cell;
     width: 100px;
@@ -20,10 +47,12 @@ header {
       position: absolute;
       bottom: 0;
       font-weight: bold;
+      font-size: 16px;
       ul {
         margin: 0 0 0 25px;
         padding: 0;
         list-style: none;
+        line-height: 2em;
         li {
           float: left;
           display: list-item;
@@ -37,6 +66,7 @@ header {
 }
 
 footer {
+  text-align: center;
   background-color: inherit;
   margin-top: 10px;
   padding-top: 5px;

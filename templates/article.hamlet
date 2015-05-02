@@ -1,5 +1,25 @@
-<h1> #{articleTitle article}
-<article> #{articleContent article}
-<hr>
-<a href="#">
-    Go to article list.
+<div .created-date>
+  <time>#{formatTime defaultTimeLocale "%Y-%m-%d" (articleCreated article)}
+
+$if null tags
+$else
+  <div .tags>
+    <ul>
+      $forall Entity _ tag <- tags
+        <li>
+          <span .fui-tag>
+          <a href="#"> #{tagName tag}
+
+$if length langs < 2
+$else
+  <div .languages>
+    <ul>
+      $forall Entity _ lang <- langs
+        <li>
+          <a href="@{ArticleR (languageSlug lang) (articleSlug article)}">#{languageName lang}
+
+<article>
+  <header>
+    <h1> #{articleTitle article}
+  <div .article-body>
+    #{articleContent article}
