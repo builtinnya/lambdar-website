@@ -53,6 +53,8 @@
 }
 
 article {
+  margin-bottom: 60px;
+
   header {
     padding-bottom: 0;
     border: none;
@@ -89,6 +91,74 @@ article {
       font-size: 1.25em;
       padding-bottom: 0.3em;
       margin-bottom: 16px;
+    }
+  }
+}
+
+/* Taken from: http://stackoverflow.com/questions/14202089/custom-hr-with-image-character-in-the-center */
+.section-hr {
+  font-family: 'Merriweather', Georgia, serif; /* choose font size you like */
+  text-align: center; /* horizontal centering */
+  line-height: 1px; /* vertical centering */
+  height: 1px; /* gap between the lines */
+  font-size: 1em; /* choose font size you like */
+  font-weight: bold;
+  border-width: 1px 0; /* top and bottom borders */
+  border-style: solid;
+  border-color: #676767;
+  margin: 20px 10px; /* 20px space above/below, 10px left/right */
+  /* ensure 1px gap between borders */
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.section-hr:after {
+  content: ""; /* content to be displayed */
+  color: inherit;
+  display: inline; /* for vertical centering and background knockout */
+  background-color: #fff; /* same as background color */
+  padding: 0 0.5em; /* size of background color knockout */
+}
+
+/* opera doesn't render correctly. hide section sign */
+x:-o-prefocus, .section-hr:after {
+  content: "";
+}
+
+.meta-val {
+  font-weight: bold;
+}
+
+.meta {
+  .meta-header {
+    hr:after {
+      content: "META";
+    }
+  }
+
+  .meta-body {
+    color: #aaaaaa;
+    font-size: 0.8em;
+
+    ul {
+      list-style-type: square;
+    }
+  }
+}
+
+.social {
+  .social-header {
+    hr:after {
+      content: "SOCIAL";
+    }
+  }
+
+  .social-body {
+    ul {
+      list-style-type: square;
     }
   }
 }

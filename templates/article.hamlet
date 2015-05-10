@@ -23,3 +23,28 @@ $else
     <h1> #{articleTitle article}
   <div .article-body>
     #{articleContent article}
+
+<div .meta>
+  <div .meta-header>
+    <hr .section-hr>
+  <div .meta-body>
+    <ul>
+      <li>
+        Views: <span class="meta-val" id="meta-views">#{articleViews article}</span>
+      <li>
+        Source on GitHub: <a href="#" class="meta-val">View source on GitHub</a>
+      <li>
+        Update history on GitHub: <a href="#" class="meta-val">View update history on GitHub</a>
+      <li>
+        Created on:
+        <time .meta-val #meta-created-on>#{formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%S%z" (articleCreated article)}
+      <li>
+        Updated on:
+        <time .meta-val #meta-updated-on>#{formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%S%z" (articleUpdated article)}
+      <li>
+        Content SHA-1: <span class="meta-val" id="meta-content-hash">#{articleHash article}</span>
+
+<div .social>
+  <div .social-header>
+    <hr .section-hr>
+  <div .social-body>
