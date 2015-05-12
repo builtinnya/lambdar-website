@@ -1,66 +1,74 @@
-.created-date {
-  float: left;
-  font-size: 0.8em;
-  font-weight: bold;
+.top-meta {
+  font-size: 0.75em;
+  font-weight: 700;
+
+  .created-date {
+    float: left;
+  }
+
+  .tags {
+    margin-left: 15px;
+    float: left;
+
+    .fui-tag {
+      vertical-align: middle;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      display: block;
+
+      li {
+        display: inline;
+      }
+
+      li + li {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .languages {
+    float: right;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+
+      li:before {
+        content: " | ";
+      }
+
+      li:first-child:before {
+        content: "";
+      }
+
+      li {
+        display: inline;
+      }
+    }
+  }
 }
 
-.tags {
-  margin-left: 15px;
-  float: left;
-  font-size: 0.8em;
-
-  .fui-tag {
-    vertical-align: middle;
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    display: block;
-
-    li {
-      display: inline;
-    }
-
-    li + li {
-      margin-left: 5px;
-    }
-  }
-}
-
-.languages {
-  float: right;
-  font-size: 0.8em;
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-
-    li:before {
-      content: "| ";
-    }
-
-    li:first-child:before {
-      content: "  ";
-    }
-
-    li {
-      display: inline;
-    }
-  }
+.top-meta:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 article {
-  margin-bottom: 60px;
+  margin-top: 45px;
 
   header {
     padding-bottom: 0;
     border: none;
+    text-align: center;
 
     h1 {
-      font-size: 2.25em;
+      font-size: 2.0em;
       padding-bottom: 0.3em;
       margin-bottom: 16px;
       border-bottom: 1px solid #eee;
@@ -68,29 +76,34 @@ article {
   }
 
   .article-body {
+    font-size: 1.0em;
+
     p {
       margin-top: 0;
       margin-bottom: 16px;
     }
 
+    li {
+    }
+
     h1 {
       font-size: 1.75em;
-      padding-bottom: 0.3em;
       margin-bottom: 16px;
+      padding-bottom: 0.3em;
       border-bottom: 1px solid #eee;
     }
 
     h2 {
       font-size: 1.5em;
-      padding-bottom: 0.3em;
       margin-bottom: 16px;
+      padding-bottom: 0.3em;
       border-bottom: 1px solid #eee;
     }
 
     h3 {
       font-size: 1.25em;
-      padding-bottom: 0.3em;
       margin-bottom: 16px;
+      padding-bottom: 0.3em;
     }
   }
 }
@@ -133,6 +146,8 @@ x:-o-prefocus, .section-hr:after {
 }
 
 .meta {
+  margin-top: 60px;
+
   .meta-header {
     hr:after {
       content: "META";
@@ -150,6 +165,8 @@ x:-o-prefocus, .section-hr:after {
 }
 
 .social {
+  margin-top: 60px;
+
   .social-header {
     hr:after {
       content: "SOCIAL";

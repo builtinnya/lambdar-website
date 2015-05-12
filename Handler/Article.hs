@@ -2,6 +2,23 @@ module Handler.Article where
 
 import Import
 import qualified Database.Esqueleto as E
+import qualified Data.Text as T
+
+githubSourcePrefix :: Text
+githubSourcePrefix =
+  T.pack "https://github.com/builtinnya/lambdar-website/blob/master/"
+
+githubHistoryPrefix :: Text
+githubHistoryPrefix =
+  T.pack "https://github.com/builtinnya/lambdar-website/commits/master/"
+
+githubSource :: Text -> Text
+githubSource path =
+  T.append githubSourcePrefix path
+
+githubHistory :: Text -> Text
+githubHistory path =
+  T.append githubHistoryPrefix path
 
 getArticleR :: Text -> Text -> Handler Html
 getArticleR lang slug = do
@@ -24,9 +41,13 @@ getArticleR lang slug = do
          E.where_ (article E.^. ArticleSlug E.==. E.val slug
              E.&&. article E.^. ArticleLang E.==. language E.^. LanguageId)
          return language
+
   case articles of
    Entity _ article : _ ->
      defaultLayout $ do
+       let sourceFileName = articleSourcefile article
+           githubSourceUrl = githubSource sourceFileName
+           githubHistoryUrl = githubHistory sourceFileName
        setTitle $ toHtml $ articleTitle article
        $(widgetFile "article")
    [] ->

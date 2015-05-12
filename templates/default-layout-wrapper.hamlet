@@ -24,19 +24,15 @@ $newline never
       document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/,'js');
   <body>
     <div class="container">
-      <header class="clearfix">
-        <div class="header-logo clearfix">
+      <header>
+        <div class="header-main">
+          <nav>
+            <ul>
+              <li><a href=@{HomeR}>HOME
+              <li><a href=@{ArticlesR}>ARTICLES
+        <div class="header-logo">
           <a href=@{HomeR}>
-            <img src=@{StaticR img_logo_svg} width="100" alt="Lambdar"/>
-        <div class="header-main clearfix">
-          <nav class="clearfix">
-            <ul class="clearfix">
-              <li>
-                <a href="#">
-                  About
-              <li>
-                <a href="#">
-                  Articles
+            <img src=@{StaticR img_logo_svg} width="200" alt="Lambdar"/>
       <div id="main" role="main">
         ^{pageBody pc}
 

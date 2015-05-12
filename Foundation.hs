@@ -61,6 +61,7 @@ instance Yesod App where
         -- you to use normal widget features in default-layout.
 
         pc <- widgetToPageContent $ do
+            addStylesheetRemote "http://fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i|Inconsolata:400,700|Merriweather Sans:400,700"
             addStylesheet $ StaticR css_bootstrap_css
             addStylesheet $ StaticR css_flat_ui_css
             addStylesheet $ StaticR css_github_css

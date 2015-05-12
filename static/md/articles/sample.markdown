@@ -1,9 +1,6 @@
-What's this page?
-======================================================================
-
 This is a sample article which contains example materials, including source code, mathematics, etc.
 
-The author usually writes articles in [Markdown](http://daringfireball.net/projects/markdown/) (or more specifically, a kind of [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown)), so the materials may accompany the corresponding markdowns for reference.
+The author usually writes articles in [Markdown](http://daringfireball.net/projects/markdown/) (more specifically, a kind of [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown)), so the materials may accompany the corresponding markdowns for reference.
 
 Markdown files are converted to HTML using [pandoc](http://pandoc.org/) with [githubMarkdownExtensions](http://hackage.haskell.org/package/pandoc-1.13.2.1/docs/Text-Pandoc-Options.html#v:githubMarkdownExtensions) reader option.
 
@@ -97,19 +94,15 @@ Tables
 | col 3 is | right-aligned |    $1 |
 ```
 
-Although it is more concise and readable, it cannot specify classes for tables. So, I have to use `<table>` tags to specify [Pure Table classes](http://purecss.io/tables/) unless someone or I implement a pegdown's extension like [special attribute feature of PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/#spe-attr).
-
-
-Bordered tables
-----------------------------------------------------------------------
+Although it is more concise and readable, it cannot specify table classes. So, I have to use `<table>` tags to specify [Bootstrap table classes](http://purecss.io/tables/), unless modify table styles directly.
 
 ```html
-<table class="pure-table pure-table-bordered">
+<table class="table">
   <thead>
     <tr>
       <th>Tables</th>
-      <th align="center">Are</th>
-      <th align="right">Cool</th>
+      <th style="text-align: center">Are</th>
+      <th style="text-align: right">Cool</th>
     </tr>
   </thead>
   <tbody>
@@ -132,12 +125,45 @@ Bordered tables
 </table>
 ```
 
-<table class="pure-table pure-table-bordered">
+<table class="table">
   <thead>
     <tr>
       <th>Tables</th>
-      <th align="center">Are</th>
-      <th align="right">Cool</th>
+      <th style="text-align: center">Are</th>
+      <th style="text-align: right">Cool</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>col 1 is</td>
+      <td align="center">left-aligned</td>
+      <td align="right">$1600</td>
+    </tr>
+    <tr>
+      <td>col 2 is</td>
+      <td align="center">centered</td>
+      <td align="right">$12</td>
+    </tr>
+    <tr>
+      <td>col 3 is</td>
+      <td align="center">right-aligned</td>
+      <td align="right">$1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+Bordered tables
+----------------------------------------------------------------------
+
+To create bordered tables, just add `.table-bordered`.See [Bootstrap documentation](http://purecss.io/tables/) for other table styles.
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Tables</th>
+      <th style="text-align: center">Are</th>
+      <th style="text-align: right">Cool</th>
     </tr>
   </thead>
   <tbody>
@@ -163,7 +189,9 @@ Bordered tables
 Source code
 ======================================================================
 
-Pegdown supports [Fenced Code Blocks](https://help.github.com/articles/github-flavored-markdown#fenced-code-blocks), which can specify a class for code blocks shown in the example below. Syntax highlighting is added by [highlight.js](https://highlightjs.org/) with github style.
+GitHub Flavored Markdown supports [Fenced Code Blocks](https://help.github.com/articles/github-flavored-markdown#fenced-code-blocks), which can specify a class for code blocks shown in the example below. Syntax highlighting is added by [highlight.js](https://highlightjs.org/) with github style.
+
+Clojure:
 
 <pre>
 ```clojure
@@ -177,13 +205,40 @@ Pegdown supports [Fenced Code Blocks](https://help.github.com/articles/github-fl
   (println "Hello, world!"))
 ```
 
+Haskell:
+
+<pre>
+```haskell
+main :: IO ()
+main = putStrLn "Hello, world!"
+```
+</pre>
+
+```haskell
+main :: IO ()
+main = putStrLn "Hello, world!"
+```
+
+JavaScript:
+
+<pre>
+```javascript
+console.log('Hello, world!');
+```
+</pre>
+
+```javascript
+console.log('Hello, world!');
+```
+
 
 Mathematics
 ======================================================================
 
 Mathematics is beautifully displayed by [MathJax](http://www.mathjax.org/) engine, which supports TeX/LaTeX, MathML, and AsciiMath for syntax.
 
-<h2 class="math-header">The Lorenz Equations</h2>
+The Lorenz Equations
+----------------------------------------------------------------------
 
 $$
 \begin{aligned}
@@ -193,13 +248,15 @@ $$
 \end{aligned}
 $$
 
-<h2 class="math-header">The Cauchy-Schwarz Inequality</h2>
+The Cauchy-Schwarz Inequality
+----------------------------------------------------------------------
 
 $$
 \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
 $$
 
-<h2 class="math-header">A Cross Product Formula</h2>
+A Cross Product Formula
+----------------------------------------------------------------------
 
 $$
 \mathbf{V}_1 \times \mathbf{V}_2 =  \begin{vmatrix}
@@ -209,11 +266,13 @@ $$
 \end{vmatrix}
 $$
 
-<h2 class="math-header">The probability of getting \(k\) heads when flipping \(n\) coins is</h2>
+The probability of getting \(k\) heads when flipping \(n\) coins is
+----------------------------------------------------------------------
 
 $$ P(E)   = {n \choose k} p^k (1-p)^{ n-k} $$
 
-<h2 class="math-header">An Identity of Ramanujan</h2>
+An Identity of Ramanujan
+----------------------------------------------------------------------
 
 $$
 \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
@@ -221,7 +280,8 @@ $$
 {1+\frac{e^{-8\pi}} {1+\ldots} } } }
 $$
 
-<h2 class="math-header">A Rogers-Ramanujan Identity</h2>
+A Rogers-Ramanujan Identity
+----------------------------------------------------------------------
 
 $$
 1 + \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots =
@@ -229,7 +289,8 @@ $$
 \quad\quad \text{for $|q|<1$}.
 $$
 
-<h2 class="math-header">Maxwell’s Equations</h2>
+Maxwell’s Equations
+----------------------------------------------------------------------
 
 $$
 \begin{aligned}
