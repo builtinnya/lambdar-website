@@ -1,8 +1,16 @@
-<h1> Articles
+<div class="header">
+  <h1> Articles
+
 $if null articles
-    <p> There are no articles in the blog
+  <p> There are no articles in the blog
 $else
-    <ul>
-        $forall Entity articleId article <- articles
-            <li>
-                <a href=@{ArticleR articleId} > #{articleTitle article}
+  <table class="table articles">
+    <thead>
+      <tr>
+        <th>Pubdate
+        <th>Title
+    <tbody>
+      $forall (Entity _ article, Entity _ language) <- articles
+        <tr>
+          <td><time>#{formatTime defaultTimeLocale "%Y-%m-%d" (articleCreated article)}
+          <td><a href=@{ArticleR (languageSlug language) (articleSlug article)}> #{articleTitle article}

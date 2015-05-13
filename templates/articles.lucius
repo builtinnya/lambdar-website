@@ -1,0 +1,12 @@
+.articles {
+  margin-top: 25px;
+
+  tr {
+    th:nth-child(1) {
+      width: 25%;
+    }
+    th:nth-child(2) {
+      width: 75%;
+    }
+  }
+}

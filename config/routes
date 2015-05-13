@@ -6,3 +6,4 @@
 
 / HomeR GET POST
 /articles/#Text/#Text ArticleR GET
+/articles/ ArticlesR GET

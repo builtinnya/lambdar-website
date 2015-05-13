@@ -79,6 +79,11 @@ header {
   }
 }
 
+.header {
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
 #main {
   margin-top: 35px;
 }
