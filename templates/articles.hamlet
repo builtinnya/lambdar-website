@@ -2,12 +2,12 @@
   <h1> Articles
 
 $if null articles
-  <p> There are no articles in the blog
+  <p> There are no articles in the site
 $else
   <table class="table articles">
     <thead>
       <tr>
-        <th>Pubdate
+        <th>Published
         <th>Title
     <tbody>
       $forall (Entity _ article, Entity _ language) <- articles
