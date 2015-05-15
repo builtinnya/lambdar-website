@@ -50,6 +50,16 @@ data AppSettings = AppSettings
     -- Example app-specific configuration values.
     , appCopyright              :: Text
     -- ^ Copyright text to appear in the footer of the page
+    , appAuthor                 :: Text
+    -- ^ Author name
+    , appContact                :: Text
+    -- ^ Contact email address
+    , appGithubUserId           :: Text
+    -- ^ Author's GitHub user ID
+    , appGithub                 :: Text
+    -- ^ Author's GitHub page
+    , appRepo                   :: Text
+    -- ^ Site repository
     , appAnalytics              :: Maybe Text
     -- ^ Google Analytics code
     }
@@ -76,6 +86,11 @@ instance FromJSON AppSettings where
         appSkipCombining          <- o .:? "skip-combining"   .!= defaultDev
 
         appCopyright              <- o .: "copyright"
+        appAuthor                 <- o .: "author"
+        appContact                <- o .: "contact"
+        appGithubUserId           <- o .: "github-user-id"
+        appGithub                 <- o .: "github"
+        appRepo                   <- o .: "repo"
         appAnalytics              <- o .:? "analytics"
 
         return AppSettings {..}

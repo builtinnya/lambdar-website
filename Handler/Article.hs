@@ -45,7 +45,9 @@ getArticleR lang slug = do
   case articles of
    Entity _ article : _ ->
      defaultLayout $ do
-       let sourceFileName = articleSourcefile article
+       master <- getYesod
+       let settings = appSettings master
+           sourceFileName = articleSourcefile article
            githubSourceUrl = githubSource sourceFileName
            githubHistoryUrl = githubHistory sourceFileName
        setTitle $ toHtml $ articleTitle article

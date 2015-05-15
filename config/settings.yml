@@ -22,4 +22,9 @@ database:
   poolsize: "_env:SQLITE_POOLSIZE:10"
 
 copyright: Copyright © 2015 Naoto Yokoyama
+author: Naoto Yokoyama
+contact: builtinnya@gmail.com
+github-user-id: builtinnya
+github: https://github.com/builtinnya
+repo: https://github.com/builtinnya/lambdar-website
 #analytics: UA-YOURCODE

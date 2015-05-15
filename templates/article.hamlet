@@ -33,6 +33,10 @@
       <li>
         Views: <span class="meta-val" id="meta-views">#{articleViews article}</span>
       <li>
+        Author: <span class="meta-val" id="meta-author">#{appAuthor settings}</span>
+      <li>
+        Contact: <span class="meta-val" id="meta-contact"><a href="mailto:#{appContact settings}">#{appContact settings}</a></span>
+      <li>
         Created on:
         <time .meta-val #meta-created-on>#{formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%S%z" (articleCreated article)}
       <li>
