@@ -25,6 +25,7 @@ library
                      Handler.Article
                      Handler.Articles
                      Handler.Langs
+                     Handler.Tag
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

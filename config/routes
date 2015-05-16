@@ -8,3 +8,4 @@
 /articles/#Text/#Text ArticleR GET
 /articles/ ArticlesR GET
 /articles/#Text/ LangsR GET
+/tags/#Text TagR GET
