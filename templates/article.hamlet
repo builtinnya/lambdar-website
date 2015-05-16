@@ -9,7 +9,7 @@
         $forall Entity _ tag <- tags
           <li>
             <span .fui-tag>
-            <a href="#"> #{tagName tag}
+            <a href="@{TagR (tagSlug tag)}"> #{tagName tag}
 
   $if length langs < 2
   $else
