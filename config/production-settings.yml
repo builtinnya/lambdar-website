@@ -1,0 +1,10 @@
+development: false
+detailed-logging: false
+should-log-all: false
+reload-templates: false
+mutable-static: false
+skip-combining: false
+
+database:
+  database: "_env:SQLITE_DATABASE:/opt/keter/database/lambdar.sqlite3"
+  poolsize: "_env:SQLITE_POOLSIZE:100"

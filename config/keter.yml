@@ -21,7 +21,8 @@ stanzas:
       - ../dist/build/article/article
 
     # Command line options passed to your application.
-    args: []
+    args:
+      - config/production-settings.yml
 
     hosts:
       # You can specify one or more hostnames for your application to respond

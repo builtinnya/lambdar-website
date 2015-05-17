@@ -18,7 +18,8 @@ import Yesod.Persist.Core (runDB)
 import Options.Applicative
 
 data Options = Options
-               { optCommand :: Command }
+               { _production :: Bool
+               , optCommand :: Command }
              deriving (Show, Eq)
 
 data Command = AddCmd    { slug :: String
@@ -94,10 +95,18 @@ deleteTag db slug = do
 
 main :: IO ()
 main = do
+  -- Parse arguments
+  o <- execParser optParser'
+
+  let configSettings =
+        if _production o
+        then "config/production-settings.yml" : [configSettingsYml]
+        else [configSettingsYml]
+
   -- Get the settings from all relevant sources
   settings <- loadAppSettings
-              -- @config/settings.yml@
-              [configSettingsYml]
+              -- configuration files
+              configSettings
 
               -- no other values to use
               []
@@ -112,8 +121,6 @@ main = do
   runSqlite db $ do
     runMigration migrateAll
 
-  -- Parse arguments
-  o <- execParser optParser'
   case optCommand o of
    AddCmd    slug name _description -> addTag    db slug name _description
    ListCmd                          -> listTags  db
@@ -160,7 +167,9 @@ optParser' = info (helper <*> optParser) ( fullDesc <> header "Lambdar command-l
 
 optParser :: Parser Options
 optParser = Options
-        <$> subparser ( command "add"
+        <$> switch ( long "production"
+                  <> help "Whether in production mode" )
+        <*> subparser ( command "add"
                            (info addOptions
                             ( fullDesc
                            <> progDesc "Add a new tag named NAME for SLUG with DESCRIPTION" ))
