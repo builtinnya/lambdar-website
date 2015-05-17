@@ -21,4 +21,4 @@ SCRIPT_NAME="$1"
 shift
 
 cd "${LAMBDAR_ROOT}" && \
-sudo "${LAMBDAR_ROOT}/dist/build/${SCRIPT_NAME}/${SCRIPT_NAME}" $@
+sudo "${LAMBDAR_ROOT}/dist/build/${SCRIPT_NAME}/${SCRIPT_NAME}" "$@"
