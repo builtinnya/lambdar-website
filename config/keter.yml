@@ -14,6 +14,12 @@ stanzas:
     # Note that all file paths are relative to the keter.yml file.
     exec: ../dist/build/lambdar/lambdar
 
+    # Extra files to be included in the bundle.
+    extraFiles:
+      - ../dist/build/lang/lang
+      - ../dist/build/tag/tag
+      - ../dist/build/article/article
+
     # Command line options passed to your application.
     args: []
 
@@ -51,7 +57,7 @@ stanzas:
 
 # Use the following to automatically copy your bundle upon creation via `yesod
 # keter`. Uses `scp` internally, so you can set it to a remote destination
-copy-to: nya@lambdar:/opt/keter/incoming
+# copy-to: lambdar:/opt/keter/incoming
 
 # If you would like to have Keter automatically create a PostgreSQL database
 # and set appropriate environment variables for it to be discovered, uncomment
