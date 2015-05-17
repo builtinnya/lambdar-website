@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+#set -o xtrace
+
+TEMP_DIR="/opt/keter/temp"
+
+# Find the current project root
+LAMBDAR_ROOT=$(find "${TEMP_DIR}" -maxdepth 1 -type d -name 'lambdar-*' -print0 | sort | tail -1)
+
+if [ -z "${LAMBDAR_ROOT}" ];
+then
+    echo "No project found on ${TEMP_DIR}" 1>&2
+    exit 1
+fi
+
+# Get script name to be executed
+SCRIPT_NAME="$1"
+
+shift
+
+cd "${LAMBDAR_ROOT}" && \
+sudo "${LAMBDAR_ROOT}/dist/build/${SCRIPT_NAME}/${SCRIPT_NAME}" $@

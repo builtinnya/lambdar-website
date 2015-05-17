@@ -12,7 +12,6 @@
 #   ./deploy
 #
 
-#
 set -o errexit
 set -o nounset
 set -o xtrace
@@ -32,5 +31,8 @@ docker commit lambdar builtinnya/lambdar
 # Get keter file from container
 docker cp lambdar:/root/lambdar-website/lambdar.keter .
 
-# Deploy to the server
+# Deploy web app to the server
 scp lambdar.keter lambdar:/opt/keter/incoming/
+
+# Deploy proxy script to the server
+scp scripts/proxy-script lambdar:/opt/keter/scripts/

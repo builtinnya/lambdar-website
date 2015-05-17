@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+
+SCRIPT_NAME="$1"
+shift
+
+# Invoke proxy script on server
+ssh -t lambdar "/opt/keter/scripts/proxy-script ${SCRIPT_NAME} --production $@"
