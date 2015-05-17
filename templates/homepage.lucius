@@ -17,6 +17,10 @@
   hr:after {
     content: "RECENT ARTICLES";
   }
+
+  p {
+    text-align: center;
+  }
 }
 
 .recent-articles {
