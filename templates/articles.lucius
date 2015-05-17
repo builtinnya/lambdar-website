@@ -1,8 +1,10 @@
 .header {
-  p {
-    text-align: center;
-  }
 }
 
 .articles {
+}
+
+.no-articles {
+  margin-top: 15px;
+  text-align: center;
 }

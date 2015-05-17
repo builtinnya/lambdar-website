@@ -2,7 +2,7 @@
   <h1> Articles
 
 $if null articles
-  <p> There are no articles in the site
+  <p class="no-articles"> There are no articles in the site
 $else
   <table class="table articles">
     <thead>

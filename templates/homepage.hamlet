@@ -5,19 +5,19 @@
 <div .recent-articles-header>
   <hr .section-hr>
 
-$if null articles
-  <p> There are no articles in the site
-$else
-  <table class="table recent-articles">
-    <thead>
-      <tr>
-        <th>Updated
-        <th>Title
-    <tbody>
-      $forall (Entity _ article, Entity _ language) <- articles
+  $if null articles
+    <p> There are no articles in the site
+  $else
+    <table class="table recent-articles">
+      <thead>
         <tr>
-          <td><time>#{formatTime defaultTimeLocale "%Y-%m-%d" (articleUpdated article)}
-              <td><a href=@{ArticleR (languageSlug language) (articleSlug article)}> #{articleTitle article}
+          <th>Updated
+          <th>Title
+      <tbody>
+        $forall (Entity _ article, Entity _ language) <- articles
+          <tr>
+            <td><time>#{formatTime defaultTimeLocale "%Y-%m-%d" (articleUpdated article)}
+                <td><a href=@{ArticleR (languageSlug language) (articleSlug article)}> #{articleTitle article}
 
 <div .meta>
   <div .meta-header>
