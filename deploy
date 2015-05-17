@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# A script to build and deploy lambdar website
+#
+# Prerequisites:
+#   - SSH is correctly configured for 'lambdar' host.
+#   - Docker image 'builtinnya/lambdar' exists.
+#     - Run `docker build -t builtinnya/lambdar .` to create it.
+#   - Keter is correctly set up on 'lambdar' host.
+#
+# Usage:
+#   ./deploy
+#
+
+#
+set -o errexit
+set -o nounset
+set -o xtrace
+
+if docker inspect lambdar > /dev/null ;
+then
+    # Remove lambdar container
+    docker rm lambdar
+fi
+
+# Create lambdar container
+docker run --name=lambdar builtinnya/lambdar bash -c 'git pull && yesod keter'
+
+# Commit changes on container
+docker commit lambdar builtinnya/lambdar
+
+# Get keter file from container
+docker cp lambdar:/root/lambdar-website/lambdar.keter .
+
+# Deploy to the server
+scp lambdar.keter lambdar:/opt/keter/incoming/
