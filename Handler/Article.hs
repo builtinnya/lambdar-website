@@ -22,8 +22,8 @@ githubHistory path =
 
 disqusShortName :: String -> Text
 disqusShortName "ja" = T.pack "lambdar-ja"
-disqusShortName "en" = T.pack "lambdar-en"
-disqusShortName _ = T.pack "lambdar-en"
+disqusShortName "en" = T.pack "lambdar"
+disqusShortName _ = T.pack "lambdar"
 
 getArticleR :: Text -> Text -> Handler Html
 getArticleR lang slug = do
