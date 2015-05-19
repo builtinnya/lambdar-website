@@ -48,7 +48,14 @@ getArticleR lang slug = do
          return language
 
   case articles of
-   (Entity _ article, Entity _ language) : _ ->
+   (Entity articleId article, Entity _ language) : _ -> do
+     -- Increment view counter
+     runDB $
+       E.update $ \article -> do
+         E.set article [ ArticleViews E.=. (article E.^. ArticleViews) E.+. (E.val 1) ]
+         E.where_ (article E.^. ArticleId E.==. E.val articleId)
+
+     -- Generate response
      defaultLayout $ do
        master <- getYesod
        let settings = appSettings master

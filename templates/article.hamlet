@@ -31,7 +31,8 @@
   <div .meta-body>
     <ul>
       <li>
-        Views: <span class="meta-val" id="meta-views">#{articleViews article}</span>
+        <!-- +1 to reflect the current visitor's view -->
+        Views: <span class="meta-val" id="meta-views">#{(articleViews article) + 1}</span>
       <li>
         Author: <span class="meta-val" id="meta-author">#{appAuthor settings}</span>
       <li>
