@@ -240,6 +240,7 @@ $ ./manage article content-update LANG SLUG [--sourcefile SOURCEFILE]
 ## TODOs
 
 - [ ] Implement search
+- [ ] Implement RSS feed
 
 ## License
 
