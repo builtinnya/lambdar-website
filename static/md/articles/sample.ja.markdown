@@ -1,169 +1,199 @@
-What's this page?
+このページは何？
 ======================================================================
 
-This is a sample article which contains example materials, including source code, mathematics, etc.
+このページは，サンプル記事である．ソースコード，数式表示などの例が含まれている．
 
-The author usually writes articles in [Markdown](http://daringfireball.net/projects/markdown/) (or more specifically, a kind of [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown)), so the materials may accompany the corresponding markdowns for reference.
+筆者は普段， [Markdown](http://daringfireball.net/projects/markdown/)（特に，[GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) の一種）で記事を書く．従って，いつでも参照できるように，例は対応する markdown を伴っている．
 
-Markdown files are converted to HTML using [pandoc](http://pandoc.org/) with [githubMarkdownExtensions](http://hackage.haskell.org/package/pandoc-1.13.2.1/docs/Text-Pandoc-Options.html#v:githubMarkdownExtensions) reader option.
+markdown ファイルは，[pandoc](http://pandoc.org/) に [githubMarkdownExtensions](http://hackage.haskell.org/package/pandoc-1.13.2.1/docs/Text-Pandoc-Options.html#v:githubMarkdownExtensions) リーダーオプションを用いて，HTML に変換される．
 
 
-Basic writing
+基本的なライティング
 ======================================================================
 
-Styling text
+テキストにスタイルを付ける
 ----------------------------------------------------------------------
 
 ```markdown
-**bold**, *italic*, ~~strike through~~
+**太字**, *イタリック*, ~~取り消し線~~
 ```
 
-**bold**, *italic*, ~~strike through~~
+**太字**, *イタリック*, ~~取り消し線~~
 
-
-Blockquotes
+引用ブロック
 ----------------------------------------------------------------------
 
 ```markdown
-Upon crossing the Rubicon, Gaius Julius Caesar said:
-> The die is cast.
+ルビコン川を渡る際，ガイウス・ユリウス・カエサルは言った：
+> 賽は投げられた．
 ```
 
-Upon crossing the Rubicon, Gaius Julius Caesar said:
-> The die is cast.
+ルビコン川を渡る際，ガイウス・ユリウス・カエサルは言った：
+> 賽は投げられた．
 
-Lists
+
+リスト
 ======================================================================
 
-Unordered lists
+順序なしリスト
 ----------------------------------------------------------------------
 
 ```markdown
-- Item
-- Item
-- Item
+- 項目
+- 項目
+- 項目
 ```
 
-- Item
-- Item
-- Item
+- 項目
+- 項目
+- 項目
 
-
-Ordered lists
+順序付きリスト
 ----------------------------------------------------------------------
 
 ```markdown
-1. Item 1
-2. Item 2
-3. Item 3
+1. 項目1
+2. 項目2
+3. 項目3
 ```
 
-1. Item 1
-2. Item 2
-3. Item 3
+1. 項目1
+2. 項目2
+3. 項目3
 
-Nested lists
+ネストしたリスト
 ----------------------------------------------------------------------
 
 ```markdown
-- Item
-    1.  Nested item 1
-    2.  Nested item 2
-- Item
-    - Nested item
-    - Nested item
-        - More nested item
+- 項目
+    1. ネストした項目1
+    2. ネストした項目2
+- 項目
+    - ネストした項目
+    - ネストした項目
+        - もっとネストした項目
 ```
 
-- Item
-    1.  Nested item 1
-    2.  Nested item 2
-- Item
-    - Nested item
-    - Nested item
-        - More nested item
+- 項目
+    1. ネストした項目1
+    2. ネストした項目2
+- 項目
+    - ネストした項目
+    - ネストした項目
+        - もっとネストした項目
 
 
-Tables
+テーブル
 ======================================================================
 
-[GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) offers syntax to create tables as below.
+[GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) は，以下のような，テーブルを作る構文を提供している．
 
 ```markdown
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
+| テーブル  |      は       |  クール |
+|----------|:-------------:|-------:|
+|  列1は   |     左寄せ     | $1600 |
+|  列2は   |    中央寄せ    |   $12 |
+|  列3は   |     右寄せ     |    $1 |
 ```
 
-Although it is more concise and readable, it cannot specify classes for tables. So, I have to use `<table>` tags to specify [Pure Table classes](http://purecss.io/tables/) unless someone or I implement a pegdown's extension like [special attribute feature of PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/#spe-attr).
-
-
-Bordered tables
-----------------------------------------------------------------------
+この構文はより簡潔で読み易いが，テーブルのクラスを指定することができない．従って，テーブルのスタイルを直接修正しない限り，[Bootstrap のテーブルクラス](http://getbootstrap.com/css/#tables) を指定するために，`<table>` タグを用いる必要がある．
 
 ```html
-<table class="pure-table pure-table-bordered">
+<table class="table">
   <thead>
     <tr>
-      <th>Tables</th>
-      <th align="center">Are</th>
-      <th align="right">Cool</th>
+      <th>テーブル</th>
+      <th style="text-align: center">は</th>
+      <th style="text-align: right">クール</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>col 1 is</td>
-      <td align="center">left-aligned</td>
+      <td>列1は</td>
+      <td align="center">左寄せ</td>
       <td align="right">$1600</td>
     </tr>
     <tr>
-      <td>col 2 is</td>
-      <td align="center">centered</td>
+      <td>列2は</td>
+      <td align="center">中央寄せ</td>
       <td align="right">$12</td>
     </tr>
     <tr>
-      <td>col 3 is</td>
-      <td align="center">right-aligned</td>
+      <td>列3は</td>
+      <td align="center">右寄せ</td>
       <td align="right">$1</td>
     </tr>
   </tbody>
 </table>
 ```
 
-<table class="pure-table pure-table-bordered">
+<table class="table">
   <thead>
     <tr>
-      <th>Tables</th>
-      <th align="center">Are</th>
-      <th align="right">Cool</th>
+      <th>テーブル</th>
+      <th style="text-align: center">は</th>
+      <th style="text-align: right">クール</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>col 1 is</td>
-      <td align="center">left-aligned</td>
+      <td>列1は</td>
+      <td align="center">左寄せ</td>
       <td align="right">$1600</td>
     </tr>
     <tr>
-      <td>col 2 is</td>
-      <td align="center">centered</td>
+      <td>列2は</td>
+      <td align="center">中央寄せ</td>
       <td align="right">$12</td>
     </tr>
     <tr>
-      <td>col 3 is</td>
-      <td align="center">right-aligned</td>
+      <td>列3は</td>
+      <td align="center">右寄せ</td>
+      <td align="right">$1</td>
+    </tr>
+  </tbody>
+</table>
+
+ボーダー付きテーブル
+----------------------------------------------------------------------
+
+ボーダー付きテーブルを作るには，`.table-bordered` クラスを追加するだけでよい．他のスタイルのテーブルについては，[Bootstrap のドキュメント](http://getbootstrap.com/css/#tables)を参照せよ．
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>テーブル</th>
+      <th style="text-align: center">は</th>
+      <th style="text-align: right">かっこいい</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>列1は</td>
+      <td align="center">左寄せ</td>
+      <td align="right">$1600</td>
+    </tr>
+    <tr>
+      <td>列2は</td>
+      <td align="center">中央寄せ</td>
+      <td align="right">$12</td>
+    </tr>
+    <tr>
+      <td>列3は</td>
+      <td align="center">右寄せ</td>
       <td align="right">$1</td>
     </tr>
   </tbody>
 </table>
 
 
-Source code
+ソースコード
 ======================================================================
 
-Pegdown supports [Fenced Code Blocks](https://help.github.com/articles/github-flavored-markdown#fenced-code-blocks), which can specify a class for code blocks shown in the example below. Syntax highlighting is added by [highlight.js](https://highlightjs.org/) with github style.
+GitHub Flavored Markdown は，[フェンスコードブロック](https://help.github.com/articles/github-flavored-markdown#fenced-code-blocks)をサポートしている．フェンスコードブロックは，以下に示すように，コードブロックのクラスを指定できる．
+ハイライトは，[highlight.js](https://highlightjs.org/)の github スタイルによって行われる．
+
+Clojure:
 
 <pre>
 ```clojure
@@ -177,13 +207,40 @@ Pegdown supports [Fenced Code Blocks](https://help.github.com/articles/github-fl
   (println "Hello, world!"))
 ```
 
+Haskell:
 
-Mathematics
+<pre>
+```haskell
+main :: IO ()
+main = putStrLn "Hello, world!"
+```
+</pre>
+
+```haskell
+main :: IO ()
+main = putStrLn "Hello, world!"
+```
+
+JavaScript:
+
+<pre>
+```javascript
+console.log('Hello, world!');
+```
+</pre>
+
+```javascript
+console.log('Hello, world!');
+```
+
+
+数式
 ======================================================================
 
-Mathematics is beautifully displayed by [MathJax](http://www.mathjax.org/) engine, which supports TeX/LaTeX, MathML, and AsciiMath for syntax.
+数式は，[MathJax](http://www.mathjax.org/) エンジンによって美しく表示される．MathJax エンジンは，TeX/LaTeX，MathML，および AsciiMath 形式をサポートしている．
 
-<h2 class="math-header">The Lorenz Equations</h2>
+ローレンツ方程式
+----------------------------------------------------------------------
 
 $$
 \begin{aligned}
@@ -193,13 +250,15 @@ $$
 \end{aligned}
 $$
 
-<h2 class="math-header">The Cauchy-Schwarz Inequality</h2>
+コーシー＝シュワルツの不等式
+----------------------------------------------------------------------
 
 $$
 \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
 $$
 
-<h2 class="math-header">A Cross Product Formula</h2>
+クロス積の式
+----------------------------------------------------------------------
 
 $$
 \mathbf{V}_1 \times \mathbf{V}_2 =  \begin{vmatrix}
@@ -209,11 +268,13 @@ $$
 \end{vmatrix}
 $$
 
-<h2 class="math-header">The probability of getting \(k\) heads when flipping \(n\) coins is</h2>
+コインを\(n\)個投げたとき，\(k\)個表になる確率
+----------------------------------------------------------------------
 
 $$ P(E)   = {n \choose k} p^k (1-p)^{ n-k} $$
 
-<h2 class="math-header">An Identity of Ramanujan</h2>
+ラマヌジャンの恒等式
+----------------------------------------------------------------------
 
 $$
 \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
@@ -221,7 +282,8 @@ $$
 {1+\frac{e^{-8\pi}} {1+\ldots} } } }
 $$
 
-<h2 class="math-header">A Rogers-Ramanujan Identity</h2>
+ロジャース・ラマヌジャン恒等式
+----------------------------------------------------------------------
 
 $$
 1 + \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots =
@@ -229,7 +291,8 @@ $$
 \quad\quad \text{for $|q|<1$}.
 $$
 
-<h2 class="math-header">Maxwell’s Equations</h2>
+マクスウェルの方程式
+----------------------------------------------------------------------
 
 $$
 \begin{aligned}
