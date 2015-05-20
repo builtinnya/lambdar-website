@@ -94,7 +94,7 @@ Tables
 | col 3 is | right-aligned |    $1 |
 ```
 
-Although it is more concise and readable, it cannot specify table classes. So, I have to use `<table>` tags to specify [Bootstrap table classes](http://purecss.io/tables/), unless modify table styles directly.
+Although it is more concise and readable, it cannot specify table classes. So, I have to use `<table>` tags to specify [Bootstrap table classes](http://getbootstrap.com/css/#tables), unless modify table styles directly.
 
 ```html
 <table class="table">
@@ -156,7 +156,7 @@ Although it is more concise and readable, it cannot specify table classes. So, I
 Bordered tables
 ----------------------------------------------------------------------
 
-To create bordered tables, just add `.table-bordered`.See [Bootstrap documentation](http://purecss.io/tables/) for other table styles.
+To create bordered tables, just add `.table-bordered`. See [Bootstrap documentation](http://getbootstrap.com/css/#tables) for other table styles.
 
 <table class="table table-bordered">
   <thead>
