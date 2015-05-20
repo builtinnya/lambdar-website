@@ -239,6 +239,7 @@ $ ./manage article content-update LANG SLUG [--sourcefile SOURCEFILE]
 
 ## TODOs
 
+- [ ] Automate database backup
 - [ ] Implement search
 - [ ] Implement RSS feed
 
