@@ -21,7 +21,7 @@ database:
   database: "_env:SQLITE_DATABASE:lambdar.sqlite3"
   poolsize: "_env:SQLITE_POOLSIZE:10"
 
-copyright: Copyright © 2015 Naoto Yokoyama
+copyright: Copyright © 2015-present Naoto Yokoyama
 author: Naoto Yokoyama
 contact: builtinnya@gmail.com
 github-user-id: builtinnya
