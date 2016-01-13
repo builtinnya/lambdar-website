@@ -245,6 +245,6 @@ $ ./manage article content-update LANG SLUG [--sourcefile SOURCEFILE]
 
 ## License
 
-Copyright © 2015 Naoto Yokoyama
+Copyright © 2015-present Naoto Yokoyama
 
 Distributed under the MIT license. See the [LICENSE](./LICENSE) file for full details.
