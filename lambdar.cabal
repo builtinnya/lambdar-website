@@ -243,6 +243,7 @@ executable article
                   , base
                   , classy-prelude
                   , classy-prelude-yesod
+                  , containers
                   , fast-logger >= 2.2.3
                   , file-embed >= 0.0.8.2
                   , hjsmin >= 0.1.4.7

@@ -27,6 +27,7 @@ import Database.Esqueleto ((^.))
 import Data.Char (isSpace)
 import Data.List (dropWhile, dropWhileEnd, intercalate)
 import Data.List.Split (splitOn)
+import qualified Data.Set as S
 
 data Options = Options
                { _production :: Bool
@@ -61,7 +62,8 @@ timestamp now updates = ( ArticleUpdated =. now ) : updates
 
 githubMarkdownToHtml :: String -> Html
 githubMarkdownToHtml markdown =
-  case readMarkdown def { readerExtensions = githubMarkdownExtensions } markdown of
+  case readMarkdown def { readerExtensions = (S.insert
+Ext_footnotes githubMarkdownExtensions) } markdown of
     Left err  -> error "cannot read markdown"
     Right doc -> writeHtml def doc
 
