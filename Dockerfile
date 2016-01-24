@@ -24,7 +24,8 @@ RUN cabal update && \
 
 WORKDIR lambdar-website
 
-RUN cabal update && \
+RUN cabal sandbox init && \
+    cabal update && \
     # Install dependencies
     cabal install && \
     # Build for production
