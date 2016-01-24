@@ -60,8 +60,10 @@ timestamp now [] = []
 timestamp now updates = ( ArticleUpdated =. now ) : updates
 
 githubMarkdownToHtml :: String -> Html
-githubMarkdownToHtml =
-  (writeHtml def) . readMarkdown def { readerExtensions = githubMarkdownExtensions }
+githubMarkdownToHtml markdown =
+  case readMarkdown def { readerExtensions = githubMarkdownExtensions } markdown of
+    Left err  -> error "cannot read markdown"
+    Right doc -> writeHtml def doc
 
 htmlToSHA1Text :: Html -> T.Text
 htmlToSHA1Text html = T.pack $ show $ (hashlazy (renderHtml html) :: Digest SHA1)

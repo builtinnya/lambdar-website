@@ -1,6 +1,6 @@
 <div .top-meta>
   <div .created-date>
-    <time>#{formatTime defaultTimeLocale "%Y-%m-%d" (articleCreated article)}
+    <time>#{formatTime Time.defaultTimeLocale "%Y-%m-%d" (articleCreated article)}
 
   $if null tags
   $else
@@ -39,10 +39,10 @@
         Contact: <span class="meta-val" id="meta-contact"><a href="mailto:#{appContact settings}">#{appContact settings}</a></span>
       <li>
         Created on:
-        <time .meta-val #meta-created-on>#{formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%S%z" (articleCreated article)}
+        <time .meta-val #meta-created-on>#{formatTime Time.defaultTimeLocale "%Y-%m-%dT%H:%M:%S%z" (articleCreated article)}
       <li>
         Updated on:
-        <time .meta-val #meta-updated-on>#{formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%S%z" (articleUpdated article)}
+        <time .meta-val #meta-updated-on>#{formatTime Time.defaultTimeLocale "%Y-%m-%dT%H:%M:%S%z" (articleUpdated article)}
       <li>
         Content SHA-1: <span class="meta-val" id="meta-content-hash">#{articleHash article}</span>
       <li>

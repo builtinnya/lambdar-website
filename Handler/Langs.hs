@@ -3,6 +3,7 @@ module Handler.Langs where
 import Import
 import qualified Database.Esqueleto as E
 import qualified Data.Text as T
+import qualified Data.Time.Format as Time
 
 
 getLangsR :: Text -> Handler Html

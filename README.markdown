@@ -27,7 +27,7 @@ The following table shows which version of software you need.
 
 | Name | Version |             Note |
 |------|---------|-----------------:|
-| GHC  | 7.8.4   | Haskell compiler |
+| GHC  | 7.10.3  | Haskell compiler |
 
 You can read [a great book for Yesod](http://www.yesodweb.com/book) on its website.
 The book helps you a lot while developing a web application.

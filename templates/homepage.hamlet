@@ -16,7 +16,7 @@
       <tbody>
         $forall (Entity _ article, Entity _ language) <- articles
           <tr>
-            <td><time>#{formatTime defaultTimeLocale "%Y-%m-%d" (articleUpdated article)}
+            <td><time>#{formatTime Time.defaultTimeLocale "%Y-%m-%d" (articleUpdated article)}
                 <td><a href=@{ArticleR (languageSlug language) (articleSlug article)}> #{articleTitle article}
 
 <div .meta>
